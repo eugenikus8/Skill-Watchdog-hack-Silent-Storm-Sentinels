@@ -2,43 +2,60 @@
 -- start global declarations for the watchdog function
 swdaction = 0
 -- I don't know how to get the class of a unit, so here are lookup tables
---1=scout 2=sniper 3=grenadier 4=soldier 5=medic 6=engineer 7=ninja
-classtable = {ABALA = 5, ARVID = 2, BOB = 3, DOUG = 6, ELF = 1, GATOR = 4, JERZEY = 4, KATE = 1, MATT = 1, NESSIE = 3, OLEG = 6, OZ = 4, RAMOS = 4, ROWDY = 3, SOOK = 1, TARAS = 3, VIPER = 2, YVES = 5, ZINAIDA = 2, AHMAD = 4, AXEL = 6, CARM = 1, DANI = 5, EAGLE = 2, FRITZ = 4, GARI = 5, GUNNAR = 1, HOLLY = 6, JAVIER = 6, KENKO = 6, KLAUS = 2, MIKE = 4, OLLI = 3, PACO = 4, REGGIE = 3, ROCCO = 3, TADAS = 2, TOKI = 1, ZAIL = 1, SHADE = 7}
+--1=scout 2=sniper 3=grenadier 4=soldier 5=medic 6=engineer 7=ninja 8=kozak    old
+--1=sniper 2=soldier 3=grenadier 4=engineer 5=medic 6=scout 7=ninja 8=kozak    new
+classtable = {
+ ARVID = 1, EAGLE = 1, KLAUS = 1, TADAS = 1, VIPER = 1, ZINAIDA = 1,
+ AHMAD = 2, FRITZ = 2, GATOR = 2, JERZEY = 2, MIKE = 2, OZ = 2, PACO = 2, RAMOS = 2,
+ BOB = 3, NESSIE = 3, OLLI = 3, REGGIE = 3, ROCCO = 3, ROWDY = 3, TARAS = 3,
+ AXEL = 4, DOUG = 4, HOLLY = 4, JAVIER = 4, KENKO = 4, OLEG = 4,
+ ABALA = 5, DANI = 5, GARI = 5, YVES = 5,
+ CARM = 6, ELF = 6, GUNNAR = 6, KATE = 6, MATT = 6, SOOK = 6, TOKI = 6, ZAIL = 6,
+ SHADE = 7} --Sentinels
 --darn punctuation in a name!
-classtable["L.A."] = 6
+classtable["L.A."] = 4
 
 --the Lua string functions do not appear to be accessible in Silent Storm,
 --so I have to make yet another look up table for the hero
-heroclass = {ALLIESENGINEER = 6, ALLIESENGINEERFEMALE = 6, ALLIESGRENADER = 3, ALLIESGRENADERFEMALE = 3, ALLIESMEDIC = 5, ALLIESMEDICFEMALE = 5, ALLIESSCOUT = 1, ALLIESSCOUTFEMALE = 1, ALLIESSNIPER = 2, ALLIESSNIPERFEMALE = 2, ALLIESSOLDIER = 4, ALLIESSOLDIERFEMALE = 4, AXISENGINEER = 6, AXISENGINEERFEMALE = 6, AXISGRENADER = 3, AXISGRENADERFEMALE = 3, AXISMEDIC = 5, AXISMEDICFEMALE = 5, AXISSCOUT = 1, AXISSCOUTFEMALE = 1, AXISSNIPER = 2, AXISSNIPERFEMALE = 2, AXISSOLDIER = 4, AXISSOLDIERFEMALE = 4}
+heroclass = {
+ ALLIESSNIPER = 1, ALLIESSNIPERFEMALE = 1, AXISSNIPER = 1, AXISSNIPERFEMALE = 1,
+ ALLIESSOLDIER = 2, ALLIESSOLDIERFEMALE = 2, AXISSOLDIER = 2, AXISSOLDIERFEMALE = 2,
+ ALLIESGRENADER = 3, ALLIESGRENADERFEMALE = 3, AXISGRENADER = 3, AXISGRENADERFEMALE = 3,
+ ALLIESENGINEER = 4, ALLIESENGINEERFEMALE = 4, AXISENGINEER = 4, AXISENGINEERFEMALE = 4,
+ ALLIESMEDIC = 5, ALLIESMEDICFEMALE = 5, AXISMEDIC = 5, AXISMEDICFEMALE = 5,
+ ALLIESSCOUT = 6, ALLIESSCOUTFEMALE = 6, AXISSCOUT = 6, AXISSCOUTFEMALE = 6,
+ HEROMALEVOICEONE = 8, HEROMALEVOICETWO = 8} --KAZAKI MOD
 
 --Skill growth lookup tables
 --the skills are adjusted according to skill = level * slope + icp
 --all of the values below are based on my observations of setxplevel
---from level 1 to 14.
+--from level 1 to 28.
 
 -- Коэффициенты роста навыков (slope) для классов
 --               melee,  shoot, throw, burst, snipe, steal, spot,  med,   engin, VP,    AP,    IC,    interrupt
 --               милик,  стрел, мет-е, очрдь, снайп, хайд,  набл,  медиц, инжен, VP,    AP,    уклон, перехват
-scoutslope =     {7.5,   5.5,   5.7,   3.9,   1.1,   7.4,   5.5,   2.1,   1.0,   6.1,   1.7,   3.6,   5.7}
 sniperslope =    {2.2,   7.3,   3.9,   1.0,   7.5,   4.6,   7.3,   2.1,   1.0,   5.0,   1.4,   2.5,   5.4}
-grenadierslope = {5.7,   7.2,   7.5,   4.0,   2.0,   2.0,   3.7,   2.0,   3.8,   11.5,  1.4,   2.9,   3.6}
 soldierslope =   {5.7,   7.2,   4.0,   7.5,   2.0,   3.7,   3.7,   2.0,   2.0,   8.6,   1.4,   3.6,   5.4}
-medicslope =     {5.6,   5.4,   3.8,   2.0,   3.9,   3.7,   3.9,   7.5,   2.2,   6.5,   1.3,   2.1,   4.3}
+grenadierslope = {5.7,   7.2,   7.5,   4.0,   2.0,   2.0,   3.7,   2.0,   3.8,   11.5,  1.4,   2.9,   3.6}
 engineerslope =  {3.8,   5.8,   3.8,   3.8,   2.1,   3.7,   3.9,   4.0,   7.5,   7.9,   1.2,   2.1,   3.6}
+medicslope =     {5.6,   5.4,   3.8,   2.0,   3.9,   3.7,   3.9,   7.5,   2.2,   6.5,   1.3,   2.1,   4.3}
+scoutslope =     {7.5,   5.5,   5.7,   3.9,   1.1,   7.4,   5.5,   2.1,   1.0,   6.1,   1.7,   3.6,   5.7}
 ninjaslope =     {10.7,  3.6,   10.6,  1.4,   1.5,   10.6,  7.8,   4.7,   1.4,   3.1,   2.5,   4.2,   10.0}
-allslopes = {scoutslope, sniperslope, grenadierslope, soldierslope, medicslope, engineerslope, ninjaslope}
+kozakslope =     {5.3,   5.9,   5.0,   5.3,   2.2,   6.0,   5.5,   2.3,   2.1,   7.2,   1.7,   3.6,   4.3} --KAZAKI MOD
+allslopes = {sniperslope, soldierslope, grenadierslope, engineerslope, medicslope, scoutslope, ninjaslope, kozakslope}
 
 -- Итеративный алгоритм ближайших точек (Iterative Closest Point — ICP)
 --               melee,  shoot, throw, burst, snipe, steal, spot,  med,   engin, VP,    AP,    IC,    interrupt
 --               милик,  стрел, мет-е, очрдь, снайп, хайд,  набл,  медиц, инжен, VP,    AP,    уклон, перехват
-scouticp =       {19,    28,    11,    11,    25,    23,    19,    23,    23,    65,    54,    4,     24}   --СЛ 2,  ЛВ 10, ИН 8
-snipericp =      {18,    28,    10,    10,    24,    22,    19,    22,    22,    62,    53,    4,     24}   --СЛ 2,  ЛВ 10, ИН 8
-grenadiericp =   {20,    25,    24,    23,    13,    16,    8,     9,     9,     141,   47,    4,     24}   --СЛ 10, ЛВ 7,  ИН 3
-soldiericp =     {19,    28,    11,    11,    25,    23,    19,    23,    23,    62,    54,    4,     24}   --СЛ 2,  ЛВ 10, ИН 8
-medicicp =       {15,    26,    9,     9,     23,    19,    22,    25,    24,    64,    50,    4,     24}   --СЛ 2,  ЛВ 8,  ИН 10
-engineericp =    {15,    25,    8,     8,     22,    18,    22,    23,    25,    61,    48,    4,     24}   --СЛ 2,  ЛВ 8,  ИН 10
-ninjaicp =       {22,    26,    24,    24,    20,    19,    17,    20,    20,    133,   50,    4,     24}
-allicp = {scouticp, snipericp, grenadiericp, soldiericp, medicicp, engineericp, ninjaicp}
+snipericp =      {16,    25,    9,     8,     20,    20,    15,    20,    20,    60,    51,    1,     20}   --СЛ 2,  ЛВ 10, ИН 8
+soldiericp =     {15,    25,    5,     10,    20,    20,    15,    20,    20,    60,    51,    1,     20}   --СЛ 2,  ЛВ 10, ИН 8
+grenadiericp =   {17,    22,    20,    20,    10,    15,    5,     5,     5,     140,   45,    1,     20}   --СЛ 10, ЛВ 7,  ИН 3
+engineericp =    {10,    20,    5,     5,     20,    15,    20,    20,    20,    60,    47,    1,     20}   --СЛ 2,  ЛВ 8,  ИН 10
+medicicp =       {10,    20,    5,     5,     20,    15,    20,    20,    20,    60,    47,    1,     20}   --СЛ 2,  ЛВ 8,  ИН 10
+scouticp =       {15,    25,    7,     7,     22,    20,    15,    20,    20,    60,    51,    1,     20}   --СЛ 2,  ЛВ 10, ИН 8
+ninjaicp =       {20,    25,    21,    20,    20,    15,    15,    15,    15,    133,   47,    1,     20}
+kozakicp =       {26,    28,    24,    25,    19,    22,    9,     14,    12,    130,   53,    1,     20} --KAZAKI MOD
+allicp = {snipericp, soldiericp, grenadiericp, engineericp, medicicp, scouticp, ninjaicp, kozakicp}
 
 trooplastlevel = {0,0,0,0,0,0,0}
 --end global declarations for the watchdog function
@@ -176,4 +193,3 @@ end  --this is the end of: function watchdog()
 --------------------------------
 -- 
 StartThread(watchdog)
-
