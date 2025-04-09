@@ -29,17 +29,17 @@ heroclass = {
 --Skill growth lookup tables
 --the skills are adjusted according to skill = level * slope + icp
 --all of the values below are based on my observations of setxplevel
---from level 1 to 28.
+--from level 1 to 22.
 
 -- Коэффициенты роста навыков (slope) для классов
 --               melee,  shoot, throw, burst, snipe, steal, spot,  med,   engin, VP,    AP,    IC,    interrupt
 --               милик,  стрел, мет-е, очрдь, снайп, хайд,  набл,  медиц, инжен, VP,    AP,    уклон, перехват
-sniperslope =    {2.2,   7.3,   3.9,   1.0,   7.5,   4.6,   7.3,   2.1,   1.0,   5.0,   1.4,   2.5,   5.4}
-soldierslope =   {5.7,   7.2,   4.0,   7.5,   2.0,   3.7,   3.7,   2.0,   2.0,   8.6,   1.4,   3.6,   5.4}
-grenadierslope = {5.7,   7.2,   7.5,   4.0,   2.0,   2.0,   3.7,   2.0,   3.8,   11.5,  1.4,   2.9,   3.6}
-engineerslope =  {3.8,   5.8,   3.8,   3.8,   2.1,   3.7,   3.9,   4.0,   7.5,   7.9,   1.2,   2.1,   3.6}
-medicslope =     {5.6,   5.4,   3.8,   2.0,   3.9,   3.7,   3.9,   7.5,   2.2,   6.5,   1.3,   2.1,   4.3}
-scoutslope =     {7.5,   5.5,   5.7,   3.9,   1.1,   7.4,   5.5,   2.1,   1.0,   6.1,   1.7,   3.6,   5.7}
+sniperslope =    {2.1,   7.3,   3.8,   1.0,   7.5,   4.6,   7.2,   2.0,   1.0,   4.8,   1.4,   2.5,   5.4}
+soldierslope =   {5.6,   7.2,   3.9,   7.5,   2.0,   3.7,   3.7,   2.0,   2.0,   8.6,   1.4,   3.6,   5.4}
+grenadierslope = {5.6,   7.2,   7.5,   3.9,   2.0,   1.9,   3.7,   2.0,   3.7,   11.4,  1.4,   2.9,   3.6}
+engineerslope =  {3.7,   5.8,   3.7,   3.7,   2.0,   3.7,   3.9,   3.9,   7.5,   7.6,   1.2,   2.1,   3.6}
+medicslope =     {5.5,   5.4,   3.7,   2.0,   3.8,   3.7,   3.9,   7.5,   2.1,   6.2,   1.2,   2.1,   4.3}
+scoutslope =     {7.5,   5.5,   5.6,   3.8,   1.0,   7.4,   5.5,   2.0,   1.0,   5.9,   1.7,   3.6,   5.8}
 ninjaslope =     {10.7,  3.6,   10.6,  1.4,   1.5,   10.6,  7.8,   4.7,   1.4,   3.1,   2.5,   4.2,   10.0}
 kozakslope =     {5.3,   5.9,   5.0,   5.3,   2.2,   6.0,   5.5,   2.3,   2.1,   7.2,   1.7,   3.6,   4.3} --KAZAKI MOD
 allslopes = {sniperslope, soldierslope, grenadierslope, engineerslope, medicslope, scoutslope, ninjaslope, kozakslope}
@@ -47,14 +47,14 @@ allslopes = {sniperslope, soldierslope, grenadierslope, engineerslope, medicslop
 -- Итеративный алгоритм ближайших точек (Iterative Closest Point — ICP)
 --               melee,  shoot, throw, burst, snipe, steal, spot,  med,   engin, VP,    AP,    IC,    interrupt
 --               милик,  стрел, мет-е, очрдь, снайп, хайд,  набл,  медиц, инжен, VP,    AP,    уклон, перехват
-snipericp =      {16,    25,    9,     8,     20,    20,    15,    20,    20,    60,    51,    1,     20}   --СЛ 2,  ЛВ 10, ИН 8
-soldiericp =     {15,    25,    5,     10,    20,    20,    15,    20,    20,    60,    51,    1,     20}   --СЛ 2,  ЛВ 10, ИН 8
-grenadiericp =   {17,    22,    20,    20,    10,    15,    5,     5,     5,     140,   45,    1,     20}   --СЛ 10, ЛВ 7,  ИН 3
-engineericp =    {10,    20,    5,     5,     20,    15,    20,    20,    20,    60,    47,    1,     20}   --СЛ 2,  ЛВ 8,  ИН 10
-medicicp =       {10,    20,    5,     5,     20,    15,    20,    20,    20,    60,    47,    1,     20}   --СЛ 2,  ЛВ 8,  ИН 10
-scouticp =       {15,    25,    7,     7,     22,    20,    15,    20,    20,    60,    51,    1,     20}   --СЛ 2,  ЛВ 10, ИН 8
-ninjaicp =       {20,    25,    21,    20,    20,    15,    15,    15,    15,    133,   47,    1,     20}
-kozakicp =       {26,    28,    24,    25,    19,    22,    9,     14,    12,    130,   53,    1,     20} --KAZAKI MOD
+snipericp =      {10,    20,    5,     5,     20,    15,    10,    15,    15,    60,    45,    1,     15}   --СЛ 2,  ЛВ 10, ИН 8
+soldiericp =     {10,    20,    5,     5,     20,    15,    10,    15,    15,    60,    45,    1,     15}   --СЛ 2,  ЛВ 10, ИН 8
+grenadiericp =   {10,    20,    15,    15,    5,     10,    5,     1,     1,     140,   45,    1,     15}   --СЛ 10, ЛВ 7,  ИН 3
+engineericp =    {10,    20,    5,     5,     15,    10,    15,    15,    15,    60,    45,    1,     15}   --СЛ 2,  ЛВ 8,  ИН 10
+medicicp =       {10,    20,    5,     5,     15,    10,    15,    15,    15,    60,    45,    1,     15}   --СЛ 2,  ЛВ 8,  ИН 10
+scouticp =       {10,    20,    5,     5,     20,    15,    10,    20,    20,    60,    45,    1,     15}   --СЛ 2,  ЛВ 10, ИН 8
+ninjaicp =       {20,    25,    21,    20,    20,    15,    15,    15,    15,    133,   47,    1,     15}
+kozakicp =       {26,    28,    24,    25,    19,    22,    9,     14,    12,    130,   53,    1,     15} --KAZAKI MOD
 allicp = {snipericp, soldiericp, grenadiericp, engineericp, medicicp, scouticp, ninjaicp, kozakicp}
 
 trooplastlevel = {0,0,0,0,0,0,0}
@@ -193,3 +193,4 @@ end  --this is the end of: function watchdog()
 --------------------------------
 -- 
 StartThread(watchdog)
+
